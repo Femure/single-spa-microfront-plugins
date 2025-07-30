@@ -6,9 +6,9 @@ export default defineConfig({
   server: {
     port: 4000,
     cors: true,
-    fs: {
-      allow: [".."], // Allow serving files from parent directories
-    },
+    // fs: {
+    //   allow: [".."], // Allow serving files from parent directories
+    // },
   },
   build: {
     rollupOptions: {

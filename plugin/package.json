@@ -9,7 +9,9 @@
     "@vitejs/plugin-react": "^4.7.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "single-spa-react": "^6.0.2"
+    "single-spa": "^6.0.3",
+    "single-spa-react": "^6.0.2",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "vite": "^5.4.0"

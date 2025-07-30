@@ -6,7 +6,7 @@ import App from "./App";
 const lifecycles = singleSpaReact({
   React,
   ReactDOMClient,
-  rootComponent: () => <App />,
+  rootComponent: (props) => <App {...props} />,
   errorBoundary(err, info, props) {
     // Customize the root error boundary for your microfrontend here.
     return null;

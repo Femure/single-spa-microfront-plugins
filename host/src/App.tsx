@@ -1,26 +1,35 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { mountRootParcel, type Parcel } from "single-spa";
+import { create } from "zustand";
+
+interface State {
+  count: number;
+  increase: () => void;
+}
+
+const useStore = create<State>()((set) => ({
+  count: 0,
+  increase: () => set((state) => ({ count: state.count + 1 })),
+}));
+
 function App() {
-  const [count, setCount] = useState(0);
+  const { count, increase } = useStore();
   const pocPluginRef = useRef<HTMLDivElement>(null);
   const currentParcel = useRef<Parcel | null>(null);
+  const url = "http://localhost:3000/plugin.js";
 
   function togglePlugin(): void {
-    const url = "http://localhost:3000/plugin.js";
-
     if (pocPluginRef.current && !currentParcel.current) {
-      // registerApplication({
-      //   name: "poc-plugin",
-      //   app: () => import(/* @vite-ignore */ url),
-      //   activeWhen: () => true,
-      //   customProps: {},
-      // });
-
       const parcel = mountRootParcel(() => import(/* @vite-ignore */ url), {
+        name: "poc-plugin",
         domElement: pocPluginRef.current,
+        customProps: {
+          customprop: "custompropvalue",
+          customcallback: () => console.log("hey its a callback"),
+        },
       });
       currentParcel.current = parcel;
       console.log(parcel);
@@ -42,9 +51,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <button onClick={increase}>count is {count}</button>
         <button onClick={() => togglePlugin()}>Toggle Plugin</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
@@ -61,7 +68,7 @@ function App() {
           minHeight: "100px",
         }}
       >
-        <div id="poc-plugin" ref={pocPluginRef}></div>
+        <div id="poc-plugin-container" ref={pocPluginRef} />
       </div>
     </>
   );
