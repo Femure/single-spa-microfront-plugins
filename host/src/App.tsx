@@ -1,22 +1,24 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { mountRootParcel, type Parcel } from "single-spa";
 import { create } from "zustand";
 
-interface State {
+interface HostState {
   count: number;
   increase: () => void;
 }
 
-const useStore = create<State>()((set) => ({
+const useHostStore = create<HostState>()((set) => ({
   count: 0,
   increase: () => set((state) => ({ count: state.count + 1 })),
 }));
 
 function App() {
-  const { count, increase } = useStore();
+  const { count, increase } = useHostStore();
+  const [hostCount, setHostCount] = useState(0);
+
   const pocPluginRef = useRef<HTMLDivElement>(null);
   const currentParcel = useRef<Parcel | null>(null);
   const url = "http://localhost:3000/plugin.js";
@@ -28,11 +30,16 @@ function App() {
         domElement: pocPluginRef.current,
         customProps: {
           customprop: "custompropvalue",
-          customcallback: () => console.log("hey its a callback"),
+          customcallback: () => {
+            setHostCount((prev) => prev + 1);
+          },
+          customstorecallback: () => {
+            increase();
+          },
+          getStore: useHostStore.getState(),
         },
       });
       currentParcel.current = parcel;
-      console.log(parcel);
     } else {
       currentParcel.current?.unmount();
       currentParcel.current = null;
@@ -42,24 +49,21 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
+        <a>
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a>
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={increase}>count is {count}</button>
+      <div style={{ display: "flex", gap: "10px" }}>
+        <button onClick={() => setHostCount((prev) => prev + 1)}>
+          count is {hostCount}
+        </button>
+        <button onClick={increase}>zustand count is {count}</button>
         <button onClick={() => togglePlugin()}>Toggle Plugin</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
       <div
         style={{
           border: "2px dashed #ccc",
