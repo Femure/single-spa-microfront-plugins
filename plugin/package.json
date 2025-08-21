@@ -1,6 +1,7 @@
 {
-  "name": "vite-single-spa-plugin-example",
+  "name": "plugin",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
@@ -11,6 +12,7 @@
     "react-dom": "^19.1.1",
     "single-spa": "^6.0.3",
     "single-spa-react": "^6.0.2",
+    "vite-plugin-single-spa": "^1.1.0",
     "zustand": "^5.0.6"
   },
   "devDependencies": {

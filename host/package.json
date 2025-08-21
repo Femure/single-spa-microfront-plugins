@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "install": "^0.13.0",
+    "npm": "^11.5.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "single-spa": "^6.0.3",
+    "single-spa-react": "^6.0.2",
+    "vite-plugin-single-spa": "^1.1.0",
     "zustand": "^5.0.6"
   },
   "devDependencies": {

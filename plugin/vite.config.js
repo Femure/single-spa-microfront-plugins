@@ -1,33 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import vitePluginSingleSpa from 'vite-plugin-single-spa'
 
 export default defineConfig({
-  plugins: [react()],
-  define: {
-    "process.env.NODE_ENV": JSON.stringify("development"),
-  },
+  plugins: [
+    react(),
+    vitePluginSingleSpa({ serverPort: 3000, spaEntryPoints: "src/poc-plugin.tsx" }),
+  ],
+  server: { port: 3000, cors: true },
   build: {
-    lib: {
-      entry: "src/poc-plugin.tsx",
-      formats: ["es"],
-      fileName: () => "plugin.js",
-    },
-    rollupOptions: {
-      // external: ["react", "react-dom/client", "single-spa-react"],
-      output: {
-        format: "es",
-      },
-    },
+    lib: { entry: "src/poc-plugin.tsx", formats: ["es"], fileName: () => "plugin.js" },
+    rollupOptions: { output: { format: "es" } },
     target: "es2020",
     minify: false,
     sourcemap: true,
   },
-  server: {
-    cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
-      allowedHeaders: ["Content-Type"],
-    },
-    port: 3000,
-  },
 });
+

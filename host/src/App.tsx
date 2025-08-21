@@ -21,7 +21,7 @@ function App() {
 
   const pocPluginRef = useRef<HTMLDivElement>(null);
   const currentParcel = useRef<Parcel | null>(null);
-  const url = "http://localhost:3000/plugin.js";
+  const url = "http://localhost:3000/src/poc-plugin.tsx";;
 
   function togglePlugin(): void {
     if (pocPluginRef.current && !currentParcel.current) {
