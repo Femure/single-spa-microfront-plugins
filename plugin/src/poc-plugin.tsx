@@ -7,9 +7,10 @@ const lifecycles = singleSpaReact({
   React,
   ReactDOMClient,
   rootComponent: (props) => <App {...props} />,
+  renderType: "createRoot",
   errorBoundary(err, info, props) {
-    // Customize the root error boundary for your microfrontend here.
-    return null;
+    console.error('Microfrontend error:', err);
+    return <div>Something went wrong in the plugin.</div>;
   },
 });
 
