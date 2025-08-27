@@ -7,10 +7,11 @@
     "preview": "vite preview --port 3000"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.131.27",
     "@vitejs/plugin-react": "^4.7.0",
+    "keycloak-js": "^26.2.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-router": "^7.8.2",
     "single-spa": "^6.0.3",
     "single-spa-react": "^6.0.2",
     "zustand": "^5.0.6"

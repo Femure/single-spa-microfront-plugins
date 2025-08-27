@@ -1,38 +1,19 @@
-import React from "react";
-import { CustomProps, ParcelProps } from "single-spa";
-import { create } from "zustand";
+import { useAuthStore } from "./authStore";
 
-interface BearState {
-  count: number;
-  increase: (by?: number) => void;
-}
+export default function Home() {
+	const logout = useAuthStore(s => s.logout);
+	const token = useAuthStore(s => s.token);
 
-const useBearStore = create<BearState>((set) => ({
-  count: 0,
-  increase: (by = 1) => set((state) => ({ count: state.count + by })),
-}));
-
-export default function Home(
-  props: ParcelProps & CustomProps & { name: string }
-) {
-  const { count: bearCount, increase: increaseBear } = useBearStore();
-
-  return (
-    <div>
-      <h3>Hello World from plugin</h3>
-      <p>Count: {bearCount}</p>
-      <div style={{ display: "flex", gap: "10px" }}>
-        <button onClick={() => increaseBear()}>Increment local store</button>
-        <button onClick={() => props.customProps.customcallback()}>
-          Call callback
-        </button>
-        <button onClick={() => props.customProps.customstorecallback()}>
-          Call store callback
-        </button>
-        <button onClick={() => props.customProps.getStore.increase()}>
-          Increase store callback
-        </button>
-      </div>
-    </div>
-  );
+	return (
+		<div className="flex flex-col items-center justify-center h-screen">
+			<h1 className="text-2xl mb-4">🏠 Home Page</h1>
+			<p className="mb-4">Token: {token}</p>
+			<button
+				onClick={logout}
+				className="bg-red-500 text-white px-4 py-2 rounded"
+			>
+				Logout
+			</button>
+		</div>
+	);
 }
