@@ -5,27 +5,26 @@ import { Layout } from "./routeLayout";
 import { Test } from "./Test";
 
 function ErrorPage() {
-	return <div>Oops! Something went wrong.</div>;
+  return <div>Oops! Something went wrong.</div>;
 }
 
 export const router = createBrowserRouter([
-	{
-		path: "/",
-		Component: Layout,
-		errorElement: <ErrorPage />,
-		children: [
-			{
-				index: true,
-				Component: Home,
-				loader: authLoader,
-				errorElement: <ErrorPage />,
-			},
-			{
-				path: "test",
-				Component: Test,
-				loader: authLoader,
-				errorElement: <ErrorPage />,
-			},
-		],
-	},
+  {
+    path: "/",
+    Component: Layout,
+    errorElement: <ErrorPage />,
+    loader: authLoader,
+    children: [
+      {
+        index: true,
+        Component: Home,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "test",
+        Component: Test,
+        errorElement: <ErrorPage />,
+      },
+    ],
+  },
 ]);
